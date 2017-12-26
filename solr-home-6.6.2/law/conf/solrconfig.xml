@@ -791,35 +791,35 @@
 
   <!-- suggest  -->   
   <searchComponent name="suggest" class="solr.SpellCheckComponent">    
-      <str name="queryAnalyzerFieldType">string</str>
-	  <lst name="spellchecker">      
-		  <str name="name">suggest</str>      
-		  <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>      
-		  <str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>   
-		  <str name="field">all</str>    
-		  <float name="threshold">0.0001</float>   
-	<!-- 使用自定义suggest词库词可以将如下两行的注释取消    
-		  <str name="sourceLocation">suggest.txt</str>    
-		  <str name="spellcheckIndexDir">spellchecker</str>  
-	-->     
-		  <str name="comparatorClass">freq</str>    
-		  <str name="buildOnOptimize">true</str>    
-		  <str name="buildOnCommit">true</str>         
-	  </lst>      
+    <str name="queryAnalyzerFieldType">string</str>
+    <lst name="spellchecker">      
+      <str name="name">suggest</str>      
+      <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>      
+      <str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>   
+      <str name="field">all</str>    
+      <float name="threshold">0.0001</float>   
+     <!-- 使用自定义suggest词库词可以将如下两行的注释取消    
+      <str name="sourceLocation">suggest.txt</str>    
+      <str name="spellcheckIndexDir">spellchecker</str>  
+     -->     
+      <str name="comparatorClass">freq</str>    
+      <str name="buildOnOptimize">true</str>    
+      <str name="buildOnCommit">true</str>         
+     </lst>      
   </searchComponent>     
   <requestHandler name="/suggest" class="solr.SearchHandler">      
-	  <lst name="defaults">      
-		  <str name="spellcheck">true</str>      
-		  <str name="spellcheck.dictionary">suggest</str>      
-		  <str name="spellcheck.count">10</str>      
-		  <str name="spellcheck.onlyMorePopular">true</str>    
-		  <str name="spellcheck.extendedResults">false</str>          
-		  <str name="spellcheck.collate">true</str>    
-		  <!--<str name="spellcheck.build">true</str>  -->      
-	  </lst>      
-	  <arr name="components">      
-		  <str>suggest</str>      
-	  </arr>      
+    <lst name="defaults">      
+       <str name="spellcheck">true</str>      
+       <str name="spellcheck.dictionary">suggest</str>      
+       <str name="spellcheck.count">10</str>      
+       <str name="spellcheck.onlyMorePopular">true</str>    
+       <str name="spellcheck.extendedResults">false</str>          
+       <str name="spellcheck.collate">true</str>    
+      <!--<str name="spellcheck.build">true</str>  -->      
+    </lst>      
+    <arr name="components">      
+      <str>suggest</str>      
+    </arr>      
   </requestHandler>  
 
   <!-- A Robust Example

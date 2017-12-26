@@ -123,20 +123,19 @@
     <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
     <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true"/>
 
-	
-	<field name="title" type="text_ik" indexed="true" stored="true" multiValued="fase"/>  
-	<field name="department" type="text_ik" indexed="true" stored="true" multiValued="fase"/>
-	<field name="release_date" type="string" indexed="true" stored="true" multiValued="fase"/>
-	<field name="release_number" type="string" indexed="true" stored="true" multiValued="fase"/>
-	<field name="implement_date" type="string" indexed="true" stored="true" multiValued="fase"/>
-	<field name="category" type="string" indexed="true" stored="true" multiValued="fase"/>
-	<field name="level" type="string" indexed="true" stored="true" multiValued="fase"/>
-	<field name="timeless" type="string" indexed="true" stored="true" multiValued="fase"/>
-	<field name="content" type="text_ik" indexed="true" stored="true" multiValued="fase"/>
-	<field name="url" type="text_general" indexed="true" stored="true" multiValued="fase"/>
-	<field name="all" type="text_ik" indexed="true" stored="false" multiValued="true" />
-	<field name="pinyin" type ="text_pinyin" indexed ="true" stored ="true" multiValued ="true"/>
-	
+    <field name="title" type="text_ik" indexed="true" stored="true" multiValued="fase"/>  
+    <field name="department" type="text_ik" indexed="true" stored="true" multiValued="fase"/>
+    <field name="release_date" type="string" indexed="true" stored="true" multiValued="fase"/>
+    <field name="release_number" type="string" indexed="true" stored="true" multiValued="fase"/>
+    <field name="implement_date" type="string" indexed="true" stored="true" multiValued="fase"/>
+    <field name="category" type="string" indexed="true" stored="true" multiValued="fase"/>
+    <field name="level" type="string" indexed="true" stored="true" multiValued="fase"/>
+    <field name="timeless" type="string" indexed="true" stored="true" multiValued="fase"/>
+    <field name="content" type="text_ik" indexed="true" stored="true" multiValued="fase"/>
+    <field name="url" type="text_general" indexed="true" stored="true" multiValued="fase"/>
+    <field name="all" type="text_ik" indexed="true" stored="false" multiValued="true" />
+    <field name="pinyin" type ="text_pinyin" indexed ="true" stored ="true" multiValued ="true"/>
+    
     <!-- Only enabled in the "schemaless" data-driven example (assuming the client
          does not know what fields may be searched) because it's very expensive to index everything twice. -->
     <!-- <copyField source="*" dest="_text_"/> -->
@@ -216,16 +215,16 @@
        is added to the index.  It's used either to index the same field differently,
        or to add multiple fields to the same field for easier/faster searching.
     -->
-	<copyField source="title" dest="all"/>
-	<copyField source="title" dest="pinyin"/>
+    <copyField source="title" dest="all"/>
+    <copyField source="title" dest="pinyin"/>
     <copyField source="department" dest="all"/>
-	<copyField source="content" dest="all"/>
-	<copyField source="url" dest="all"/>
-	<copyField source="category" dest="all"/>
-	<copyField source="level" dest="all"/>
-	<copyField source="timeless" dest="all"/>
-	<copyField source="release_number" dest="all"/>
-	
+    <copyField source="content" dest="all"/>
+    <copyField source="url" dest="all"/>
+    <copyField source="category" dest="all"/>
+    <copyField source="level" dest="all"/>
+    <copyField source="timeless" dest="all"/>
+    <copyField source="release_number" dest="all"/>
+    
     <!-- field type definitions. The "name" attribute is
        just a label to be used by field definitions.  The "class"
        attribute and any other attributes determine the real
@@ -249,8 +248,8 @@
     <!-- sortMissingLast and sortMissingFirst attributes are optional attributes are
          currently supported on types that are sorted internally as strings
          and on numeric types.
-	     This includes "string","boolean", "int", "float", "long", "date", "double",
-	     including the "Trie" and "Point" variants.
+         This includes "string","boolean", "int", "float", "long", "date", "double",
+         including the "Trie" and "Point" variants.
        - If sortMissingLast="true", then a sort on this field will cause documents
          without the field to come after documents with the field,
          regardless of the requested sort order (asc or desc).
@@ -390,10 +389,10 @@
 
     <!-- A general text field that has reasonable, generic
          cross-language defaults: it tokenizes with StandardTokenizer,
-	       removes stop words from case-insensitive "stopwords.txt"
-	       (empty by default), and down cases.  At query time only, it
-	       also applies synonyms.
-	  -->
+           removes stop words from case-insensitive "stopwords.txt"
+           (empty by default), and down cases.  At query time only, it
+           also applies synonyms.
+    -->
     <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" multiValued="true">
       <analyzer type="index">
         <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -412,7 +411,7 @@
       </analyzer>
     </fieldType>
 
-	<!-- IK分词 start-->  
+    <!-- IK分词 start-->  
     <fieldType name="text_ik" class="solr.TextField">     
         <analyzer type="index" positionIncrementGap="100" autoGeneratePhraseQueries="true">  
             <!--   
@@ -425,23 +424,23 @@
             <tokenizer class="org.wltea.analyzer.lucene.IKTokenizerFactory" useSmart="true" isMaxWordLength="true"/>  			
         </analyzer>  
     </fieldType>  
-	<!-- IK分词 end-->  
+    <!-- IK分词 end-->  
 
-	<!-- 拼音 start-->  
-	<fieldType name="text_pinyin" class="solr.TextField" positionIncrementGap="0">
-		<analyzer type="index">
-			<tokenizer class="org.wltea.analyzer.lucene.IKTokenizerFactory"/>
-			<filter class="com.shentong.search.analyzers.PinyinTransformTokenFilterFactory" minTermLenght="2" />
-			<filter class="com.shentong.search.analyzers.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" />
-		</analyzer>
-		<analyzer type="query">
-			<tokenizer class="org.wltea.analyzer.lucene.IKTokenizerFactory"/>
-			<filter class="com.shentong.search.analyzers.PinyinTransformTokenFilterFactory" minTermLenght="2" />
-			<filter class="com.shentong.search.analyzers.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" />
-		</analyzer>
-	</fieldType>
-	<!-- 拼音 end-->  
-	
+    <!-- 拼音 start-->  
+    <fieldType name="text_pinyin" class="solr.TextField" positionIncrementGap="0">
+        <analyzer type="index">
+            <tokenizer class="org.wltea.analyzer.lucene.IKTokenizerFactory"/>
+            <filter class="com.shentong.search.analyzers.PinyinTransformTokenFilterFactory" minTermLenght="2" />
+            <filter class="com.shentong.search.analyzers.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" />
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="org.wltea.analyzer.lucene.IKTokenizerFactory"/>
+            <filter class="com.shentong.search.analyzers.PinyinTransformTokenFilterFactory" minTermLenght="2" />
+            <filter class="com.shentong.search.analyzers.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" />
+        </analyzer>
+    </fieldType>
+    <!-- 拼音 end-->  
+    
 
     <!-- A text field with defaults appropriate for English: it
          tokenizes with StandardTokenizer, removes English stop words
